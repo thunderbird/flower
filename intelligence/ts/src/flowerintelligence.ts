@@ -38,6 +38,7 @@ export class FlowerIntelligence {
   static #instance: FlowerIntelligence | null = null;
   static #remoteHandoff = false;
   static #apiKey?: string;
+  static #baseUrl?: string;
 
   #remoteEngine?: RemoteEngine;
   #availableLocalEngines: Engine[] = isNode ? [new TransformersEngine()] : [new WebllmEngine()];
@@ -75,6 +76,20 @@ export class FlowerIntelligence {
    */
   public set apiKey(apiKey: string) {
     FlowerIntelligence.#apiKey = apiKey;
+  }
+
+  /**
+   * Set baseUrl for FlowerIntelligence remote engine.
+   */
+  public set baseUrl(baseUrl: string) {
+    FlowerIntelligence.#baseUrl = baseUrl;
+  }
+
+  /**
+   * Get baseUrl for FlowerIntelligence remote engine.
+   */
+  public get baseUrl() {
+    return FlowerIntelligence.#baseUrl;
   }
 
   /**
@@ -274,7 +289,7 @@ export class FlowerIntelligence {
         },
       };
     }
-    this.#remoteEngine = this.#remoteEngine ?? new RemoteEngine(FlowerIntelligence.#apiKey);
+    this.#remoteEngine = this.#remoteEngine ?? new RemoteEngine(FlowerIntelligence.#apiKey, FlowerIntelligence.#baseUrl);
     return { ok: true, value: this.#remoteEngine };
   }
 

@@ -53,9 +53,9 @@ export class RemoteEngine extends BaseEngine {
   private apiKey: string;
   private cryptoHandler: CryptographyHandler;
 
-  constructor(apiKey: string) {
+  constructor(apiKey: string, baseUrl?: string) {
     super();
-    this.baseUrl = REMOTE_URL;
+    this.baseUrl = baseUrl || REMOTE_URL;
     this.apiKey = apiKey;
     this.cryptoHandler = new CryptographyHandler(this.baseUrl, this.apiKey);
   }
